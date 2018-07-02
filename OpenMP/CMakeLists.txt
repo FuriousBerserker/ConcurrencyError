@@ -6,6 +6,7 @@ find_package(CUDA REQUIRED)
 if(OpenMP_FOUND)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
 endif()
+
 #file(GLOB SUBDIR_LIST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR})
 set(TARGET_OPTION "-fopenmp-targets=nvptx64-nvidia-cuda --cuda-path=${CUDA_TOOLKIT_ROOT_DIR}")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${TARGET_OPTION}")
