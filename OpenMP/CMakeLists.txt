@@ -1,7 +1,6 @@
-#include(FindOpenMP)
 find_package(OpenMP REQUIRED)
 find_package(CUDA REQUIRED)
-#find_package(clang 7.0.0 REQUIRED)
+find_package(Clang REQUIRED)
 
 set(CMAKE_C_COMPILER clang)
 set(GROUP_NAME OpenMP)
