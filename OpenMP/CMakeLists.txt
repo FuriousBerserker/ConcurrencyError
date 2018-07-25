@@ -2,7 +2,15 @@ find_package(OpenMP REQUIRED)
 find_package(CUDA REQUIRED)
 find_package(Clang REQUIRED)
 
-set(CMAKE_C_COMPILER clang)
+
+if(NOT ${CLANG_FOUND})
+    message(FATAL_ERROR "Clang is not installed. The benchmarks are used to test clang's support to OpenMP target") 
+elseif(CLANG_VERSION VERSION_LESS "7.0.0")
+    message(FATAL_ERROR "Require clang version larger than 7.0.0")
+endif()
+
+set(CMAKE_C_COMPILER ${CLANG_C_COMPILER})
+message("${CLANG_C_COMPILER}")
 set(GROUP_NAME OpenMP)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
