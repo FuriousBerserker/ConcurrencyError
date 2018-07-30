@@ -1,17 +1,15 @@
-find_package(OpenMP REQUIRED)
 find_package(CUDA REQUIRED)
 find_package(Clang REQUIRED)
 
 
-if(NOT ${CLANG_FOUND})
-    message(FATAL_ERROR "Clang is not installed. The benchmarks are used to test clang's support to OpenMP target") 
-elseif(CLANG_VERSION VERSION_LESS "7.0.0")
+if(CLANG_VERSION VERSION_LESS "7.0.0")
     message(FATAL_ERROR "Require clang version larger than 7.0.0")
 endif()
 
 set(CMAKE_C_COMPILER ${CLANG_C_COMPILER})
-message("${CLANG_C_COMPILER}")
 set(GROUP_NAME OpenMP)
+
+find_package(OpenMP REQUIRED)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
 
@@ -26,25 +24,6 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${TARGET_OPTION}")
 #    message(FATAL_ERROR "${CMAKE_C_COMPILER} doesn't support openmp offloading flags")
 #endif()
 
-function(listSubDir RESULT ROOT_PATH)
-    file(GLOB FILES RELATIVE ${ROOT_PATH} *)
-    set(${RESULT} "")
-    foreach(FILE_NAME ${FILES})
-        if(IS_DIRECTORY "${ROOT_PATH}/${FILE_NAME}")
-            if (${ARGC} GREATER "2")
-                set(FILE_NAME ${FILE_NAME}.${ARGV2})
-            endif()
-            list(APPEND ${RESULT} ${FILE_NAME})
-        endif()
-    endforeach()
-    set(${RESULT} ${${RESULT}} PARENT_SCOPE)
-endfunction()
-
-function(removeSuffix RESULT INPUT)
-    string(FIND ${INPUT} "." DOT_POS REVERSE)
-    string(SUBSTRING ${INPUT} "0" ${DOT_POS} ${RESULT})
-    set(${RESULT} ${${RESULT}} PARENT_SCOPE)
-endfunction()
 
 set(SUBDIR_LIST "")
 listSubDir(SUBDIR_LIST ${CMAKE_CURRENT_SOURCE_DIR})

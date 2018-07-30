@@ -18,3 +18,10 @@ endfunction()
 
 isClangInstalled()
 
+if(${Clang_FIND_REQUIRED})
+    if(${CLANG_FOUND})
+        message(STATUS "Found Clang: ${CLANG_COMMAND} (found version \"${CLANG_VERSION}\")")
+    else()
+        message(FATAL_ERROR "Clang is not installed.") 
+    endif()
+endif()
