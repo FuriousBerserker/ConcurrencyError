@@ -11,7 +11,7 @@ set(GROUP_NAME OpenMP)
 
 find_package(OpenMP REQUIRED)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS} -O0")
 
 #file(GLOB SUBDIR_LIST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR})
 set(TARGET_OPTION "-fopenmp-targets=nvptx64-nvidia-cuda --cuda-path=${CUDA_TOOLKIT_ROOT_DIR}")
@@ -36,7 +36,7 @@ endforeach()
 
 # add target to generate PTX files
 set(PTX_FILE_LIST "")
-set(PTX_OPTION "${CMAKE_C_FLAGS} -S")
+set(PTX_OPTION "${CMAKE_C_FLAGS} -S -O0")
 set(OUTPUT_PTX "output-ptx")
 separate_arguments(PTX_OPTION)
 
